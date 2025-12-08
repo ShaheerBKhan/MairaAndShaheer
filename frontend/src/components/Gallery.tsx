@@ -1,0 +1,121 @@
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import { Box, CircularProgress, IconButton, Typography } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
+import { useEffect, useMemo, useState } from 'react'
+import { useResponsive } from '../context/ResponsiveContext'
+import { getPhotos } from '../services/GalleryService'
+import PhotoSection from './PhotoSection'
+
+interface GalleryProps {
+  selectedYear: number
+  selectedMonth: number
+}
+
+export default function Gallery({ selectedYear, selectedMonth }: GalleryProps): JSX.Element {
+  const { isMobile, isTablet } = useResponsive()
+  
+  const [page, setPage] = useState(0)
+  const { data: photos = [], isLoading } = useQuery({
+    queryKey: ['photos', selectedYear, selectedMonth],
+    queryFn: () => getPhotos({ year: selectedYear, month: selectedMonth })
+  })
+
+  const { photosPerPage, totalPages, isArrowNavigationVisible } = useMemo(() => {
+    const photosPerPage = isMobile ? 1 : isTablet ? 2 : 3
+    const totalPages = Math.ceil(photos.length / photosPerPage)
+    const isArrowNavigationVisible = photos.length > photosPerPage
+    return { photosPerPage, totalPages, isArrowNavigationVisible }
+  }, [isMobile, isTablet, photos.length]);
+
+  const startIndex = page * photosPerPage;
+  const endIndex = startIndex + photosPerPage;
+  const currentPhotos = photos.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    setPage(0)
+  }, [selectedYear, selectedMonth])
+
+  return (
+    <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflow: 'hidden' }}>
+      {isLoading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+          <CircularProgress sx={{ color: 'white' }} />
+        </Box>
+      ) : photos.length === 0 ? (
+        <Typography align="center" sx={{ color: 'rgba(255,255,255,0.5)', py: 8 }}>
+          No photos for this month
+        </Typography>
+      ) : (
+        <>
+          <Box sx={{ 
+            flex: 1, 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            gap: 4
+          }}>
+            {isArrowNavigationVisible && page > 0 ? (
+              <IconButton
+                onClick={() => setPage(prev => prev - 1)}
+                sx={{
+                  bgcolor: 'rgba(232, 180, 240, 0.1)',
+                  color: '#e8b4f0',
+                  '&:hover': {
+                    bgcolor: 'rgba(232, 180, 240, 0.2)',
+                    transform: 'scale(1.1)'
+                  }
+                }}
+              >
+                <ArrowBackIosNewIcon />
+              </IconButton>
+            ) : (
+              <Box sx={{ width: 40 }} />
+            )}
+            
+            <Box sx={{ 
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+                lg: 'repeat(3, 1fr)'
+              },
+              gap: 3
+            }}>
+              {currentPhotos.map((photo) => (
+                <PhotoSection
+                  key={photo.id}
+                  title={photo.title}
+                  photoSourceUrl={photo.photoSourceUrl}
+                  description={photo.description}
+                />
+              ))}
+            </Box>
+
+            {isArrowNavigationVisible && page < totalPages - 1 ? (
+              <IconButton
+                onClick={() => setPage(prev => prev + 1)}
+                sx={{
+                  bgcolor: 'rgba(232, 180, 240, 0.1)',
+                  color: '#e8b4f0',
+                  '&:hover': {
+                    bgcolor: 'rgba(232, 180, 240, 0.2)',
+                    transform: 'scale(1.1)'
+                  }
+                }}
+              >
+                <ArrowForwardIosIcon />
+              </IconButton>
+            ) : (
+              <Box sx={{ width: 40 }} />
+            )}
+          </Box>
+
+          <Typography align="center" sx={{ py: 2, color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem' }}>
+            Page {page + 1} of {totalPages}
+          </Typography>
+        </>
+      )}
+    </Box>
+  )
+}
