@@ -41,7 +41,8 @@ export default function Photo(props: PhotoProps): JSX.Element {
             width: '256px',
             height: '256px',
             objectFit: 'cover',
-            display: 'block'
+            display: 'block',
+            border: '2px solid #000000'
           }}
         />
         <Typography

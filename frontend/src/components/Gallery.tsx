@@ -51,9 +51,10 @@ export default function Gallery({ selectedYear, selectedMonth }: GalleryProps): 
           <Box sx={{ 
             flex: 1, 
             display: 'flex', 
+            flexDirection: (isMobile || isTablet) ? 'column' : 'row',
             alignItems: 'center', 
             justifyContent: 'center',
-            gap: 4
+            gap: { xs: 2, lg: 4 }
           }}>
             {isArrowNavigationVisible && page > 0 ? (
               <IconButton
@@ -61,6 +62,7 @@ export default function Gallery({ selectedYear, selectedMonth }: GalleryProps): 
                 sx={{
                   bgcolor: 'rgba(232, 180, 240, 0.1)',
                   color: '#e8b4f0',
+                  order: { xs: 1, lg: 0 },
                   '&:hover': {
                     bgcolor: 'rgba(232, 180, 240, 0.2)',
                     transform: 'scale(1.1)'
@@ -70,7 +72,7 @@ export default function Gallery({ selectedYear, selectedMonth }: GalleryProps): 
                 <ArrowBackIosNewIcon />
               </IconButton>
             ) : (
-              <Box sx={{ width: 40 }} />
+              <Box sx={{ width: { xs: 0, lg: 40 }, height: { xs: 40, lg: 0 }, order: { xs: 1, lg: 0 } }} />
             )}
             
             <Box sx={{ 
@@ -80,7 +82,8 @@ export default function Gallery({ selectedYear, selectedMonth }: GalleryProps): 
                 sm: 'repeat(2, 1fr)',
                 lg: 'repeat(3, 1fr)'
               },
-              gap: 3
+              gap: 3,
+              order: { xs: 2, lg: 0 }
             }}>
               {currentPhotos.map((photo) => (
                 <PhotoSection
@@ -98,6 +101,7 @@ export default function Gallery({ selectedYear, selectedMonth }: GalleryProps): 
                 sx={{
                   bgcolor: 'rgba(232, 180, 240, 0.1)',
                   color: '#e8b4f0',
+                  order: { xs: 3, lg: 0 },
                   '&:hover': {
                     bgcolor: 'rgba(232, 180, 240, 0.2)',
                     transform: 'scale(1.1)'
@@ -107,7 +111,7 @@ export default function Gallery({ selectedYear, selectedMonth }: GalleryProps): 
                 <ArrowForwardIosIcon />
               </IconButton>
             ) : (
-              <Box sx={{ width: 40 }} />
+              <Box sx={{ width: { xs: 0, lg: 40 }, height: { xs: 40, lg: 0 }, order: { xs: 3, lg: 0 } }} />
             )}
           </Box>
 
