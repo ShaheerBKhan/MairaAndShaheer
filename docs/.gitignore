@@ -7,9 +7,10 @@ node_modules/
 /coverage
 
 # Production
-/build
-/dist
-dist/
+# Don't ignore build output for GitHub Pages
+# /build
+# /dist
+# dist/
 
 # Misc
 .DS_Store
