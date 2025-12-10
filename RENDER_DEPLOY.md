@@ -12,8 +12,9 @@
    - **Name**: `mairaandshaheer-backend` (or your preferred name)
    - **Region**: Choose closest to you (e.g., Oregon USA)
    - **Branch**: `main`
-   - **Root Directory**: `backend`
-   - **Runtime**: Leave as **Docker** (Render auto-detected the Dockerfile)
+   - **Root Directory**: Leave blank (repository root)
+   - **Dockerfile Path**: `backend/Dockerfile`
+   - **Runtime**: Docker
    - **Instance Type**: Free (or your preference)
 5. **Add Environment Variable**:
    - Click "Advanced" or scroll to "Environment Variables"
