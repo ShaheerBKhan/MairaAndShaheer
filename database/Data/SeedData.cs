@@ -56,7 +56,7 @@ public static class SeedData
             {
                 Title = "Desi Massage",
                 PhotoSourceUrl = "https://kiqjulnouryrndxojqdh.supabase.co/storage/v1/object/sign/user-uploads/lp_image%205.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zN2VkM2QxNy1kMmM1LTRlMzEtOGIxOC1mNTBmZWNiMTBhZmYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ1c2VyLXVwbG9hZHMvbHBfaW1hZ2UgNS5qcGciLCJpYXQiOjE3NjUzNTE4MTksImV4cCI6MTc5Njg4NzgxOX0.sxA9oHhEIHpfDvCEedoIijF4DXL8GB-BUoaaL_dI2q0",
-                Description = "I laughed so hard seeing this screen shot. Ammi Ji put some onion turkari or something in your hair. I learned you really nice head scratches 😂",
+                Description = "I laughed so hard seeing this screen shot. Ammi Ji put some onion turkari or something in your hair. I learned you really love head scratches 😂",
                 Time = DateTime.SpecifyKind(new DateTime(2025, 11, 20), DateTimeKind.Utc)
             },
             new Photo
