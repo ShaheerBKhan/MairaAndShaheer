@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useResponsive } from '../context/ResponsiveContext'
 import { getPhotos } from '../services/GalleryService'
 import PhotoSection from './PhotoSection'
+import VideoSection from './VideoSection'
 
 interface GalleryProps {
   selectedYear: number
@@ -20,6 +21,15 @@ export default function Gallery({ selectedYear, selectedMonth }: GalleryProps): 
 		queryKey: ['photos', selectedYear, selectedMonth],
 		queryFn: () => getPhotos({ year: selectedYear, month: selectedMonth })
 	})
+
+	// Hardcoded video for December 2025
+	const isDecember2025 = selectedYear === 2025 && selectedMonth === 12
+	const videoData = {
+		title: "Happy Birthday meri Jaan!",
+		videoSourceUrl: "https://kiqjulnouryrndxojqdh.supabase.co/storage/v1/object/sign/user-uploads/Birthday_Movie_Final.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zN2VkM2QxNy1kMmM1LTRlMzEtOGIxOC1mNTBmZWNiMTBhZmYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ1c2VyLXVwbG9hZHMvQmlydGhkYXlfTW92aWVfRmluYWwubXA0IiwiaWF0IjoxNzY1NDI3MDAwLCJleHAiOjE3OTY5NjMwMDB9.oVMV-DOptnjsAjswHZlp_B64FkZWTCgVu1o3uPhHbDE",
+		thumbnailUrl: "https://placehold.co/256x256/ff69b4/ffffff?text=Play+Video",
+		description: "See... I'm not that bad with video editing 😇"
+	}
 
 	const { photosPerPage, totalPages, isArrowNavigationVisible } = useMemo(() => {
 		const photosPerPage = isMobile ? 1 : isTablet ? 2 : 3
@@ -41,6 +51,21 @@ export default function Gallery({ selectedYear, selectedMonth }: GalleryProps): 
 			{isLoading ? (
 				<Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
 					<CircularProgress sx={{ color: 'white' }} />
+				</Box>
+			) : isDecember2025 ? (
+				<Box sx={{ 
+					flex: 1, 
+					display: 'flex', 
+					alignItems: 'center', 
+					justifyContent: 'center',
+					py: 4
+				}}>
+					<VideoSection
+						title={videoData.title}
+						videoSourceUrl={videoData.videoSourceUrl}
+						thumbnailUrl={videoData.thumbnailUrl}
+						description={videoData.description}
+					/>
 				</Box>
 			) : photos.length === 0 ? (
 				<Typography align="center" sx={{ color: 'rgba(255,255,255,0.5)', py: 8 }}>
