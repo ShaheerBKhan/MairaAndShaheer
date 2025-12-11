@@ -1,17 +1,48 @@
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, Dialog, IconButton, Typography } from '@mui/material'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Photo from './Photo'
 
 type PhotoSectionProps = {
   title: string
   photoSourceUrl: string
   description: string
+  time?: string
 }
 
+const RIBBON_COLORS = [
+	'#ff69b4', // Hot pink
+	'#ff1493', // Deep pink
+	'#ff6b9d', // Pastel pink
+	'#c71585', // Medium violet red
+	'#ff85a1', // Light pink
+	'#ff4d94', // Bright pink
+]
+
+const BACKGROUND_GRADIENTS = [
+	// Pink gradient
+	'linear-gradient(to bottom, #ffd1dc 0%, #ffb3c1 30%, #ff8fa3 60%, #c9184a 85%, #a4133c 100%)',
+	// Blue gradient
+	'linear-gradient(to bottom, #e3f2fd 0%, #bbdefb 30%, #64b5f6 60%, #1976d2 85%, #0d47a1 100%)',
+	// Green gradient
+	'linear-gradient(to bottom, #e8f5e9 0%, #c8e6c9 30%, #81c784 60%, #388e3c 85%, #1b5e20 100%)',
+	// Orange gradient
+	'linear-gradient(to bottom, #fff3e0 0%, #ffe0b2 30%, #ffb74d 60%, #f57c00 85%, #e65100 100%)',
+	// Yellow gradient
+	'linear-gradient(to bottom, #fffde7 0%, #fff9c4 30%, #fff176 60%, #fbc02d 85%, #f57f17 100%)',
+]
+
 export default function PhotoSection(props: PhotoSectionProps): JSX.Element {
-	const { title, photoSourceUrl, description } = props
+	const { title, photoSourceUrl, description, time } = props
 	const [open, setOpen] = useState(false)
+	
+	const ribbonColor = useMemo(() => {
+		return RIBBON_COLORS[Math.floor(Math.random() * RIBBON_COLORS.length)]
+	}, [title])
+	
+	const backgroundGradient = useMemo(() => {
+		return BACKGROUND_GRADIENTS[Math.floor(Math.random() * BACKGROUND_GRADIENTS.length)]
+	}, [title])
   
 	return (
 		<>
@@ -26,7 +57,7 @@ export default function PhotoSection(props: PhotoSectionProps): JSX.Element {
 				fullWidth
 				PaperProps={{
 					sx: {
-						background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+						background: backgroundGradient,
 						borderRadius: 2
 					}
 				}}
@@ -48,13 +79,13 @@ export default function PhotoSection(props: PhotoSectionProps): JSX.Element {
 					<CloseIcon />
 				</IconButton>
 				<Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, p: 4, gap: 4 }}>
-					<Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-						{/* Polaroid frame wrapper */}
-						<Box
-							sx={{
-								backgroundColor: '#ffffff',
-								padding: '24px 24px 80px 24px',
-								boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
+				<Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+					{/* Polaroid frame wrapper */}
+					<Box
+						sx={{
+							backgroundColor: '#ffffff',
+							padding: '24px 24px 35px 24px',
+							boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
 								maxWidth: '90%',
 								transform: 'rotate(-1deg)',
 								transition: 'transform 0.3s ease',
@@ -72,20 +103,75 @@ export default function PhotoSection(props: PhotoSectionProps): JSX.Element {
 									maxHeight: '60vh',
 									objectFit: 'contain',
 									display: 'block',
-									border: '2px solid #000000'
+									border: '4px solid #000000',
+									boxShadow: 'inset 0 0 8px rgba(0,0,0,0.2)'
 								}}
 							/>
 							<Typography
-								variant="h6"
+								variant="h5"
 								sx={{
 									fontFamily: '"Dancing Script", cursive',
 									textAlign: 'center',
-									mt: 2,
-									color: '#333'
+									mt: 2.5,
+									color: '#222',
+									fontWeight: 600,
+									fontSize: '1.5rem'
 								}}
 							>
 								{title}
 							</Typography>
+							{time && (
+								<Typography
+									variant="body2"
+									sx={{
+										textAlign: 'center',
+										mt: 0.75,
+										color: '#555',
+										fontFamily: '"Georgia", serif',
+										fontSize: '1rem',
+										display: 'block'
+									}}
+								>
+									{new Date(time).toLocaleDateString('en-US', { 
+										month: 'long', 
+										day: 'numeric', 
+										year: 'numeric' 
+									})}
+								</Typography>
+							)}
+							<Box
+								sx={{
+									display: 'flex',
+									justifyContent: 'center',
+									alignItems: 'center',
+									mt: 3,
+									gap: 1.5
+								}}
+							>
+								<Box
+									sx={{
+										width: '100px',
+										height: '3px',
+										background: `linear-gradient(to right, transparent, ${ribbonColor}, transparent)`
+									}}
+								/>
+								<Box
+									sx={{
+										width: '12px',
+										height: '12px',
+										borderRadius: '50%',
+										backgroundColor: ribbonColor,
+										boxShadow: `0 0 8px ${ribbonColor}80`
+									}}
+								/>
+								<Box
+									sx={{
+										width: '100px',
+										height: '3px',
+										background: `linear-gradient(to right, transparent, ${ribbonColor}, transparent)`
+									}}
+								/>
+							</Box>
 						</Box>
 					</Box>
 					<Box sx={{ 
@@ -104,7 +190,7 @@ export default function PhotoSection(props: PhotoSectionProps): JSX.Element {
 							gutterBottom
 							sx={{
 								fontFamily: '"Dancing Script", cursive',
-								color: '#d35d6e',
+								color: '#800f2f',
 								fontWeight: 600,
 								mb: 2
 							}}

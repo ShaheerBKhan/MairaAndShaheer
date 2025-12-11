@@ -60,14 +60,14 @@ export default function Gallery({ selectedYear, selectedMonth }: GalleryProps): 
 							<IconButton
 								onClick={() => setPage(prev => prev - 1)}
 								sx={{
-									bgcolor: 'rgba(255, 255, 255, 0.9)',
-									color: '#d6156f',
+									bgcolor: 'rgba(255, 255, 255, 0.95)',
+									color: '#a4133c',
 									order: { xs: 1, lg: 0 },
-									boxShadow: '0 4px 12px rgba(255, 105, 180, 0.3)',
+									boxShadow: '0 4px 12px rgba(164, 19, 60, 0.3), 0 2px 8px rgba(201, 24, 74, 0.2)',
 									'&:hover': {
 										bgcolor: '#fff',
 										transform: 'scale(1.1)',
-										boxShadow: '0 6px 20px rgba(255, 105, 180, 0.4)'
+										boxShadow: '0 6px 20px rgba(164, 19, 60, 0.5), 0 3px 12px rgba(201, 24, 74, 0.3)'
 									}
 								}}
 							>
@@ -87,28 +87,29 @@ export default function Gallery({ selectedYear, selectedMonth }: GalleryProps): 
 							gap: 3,
 							order: { xs: 2, lg: 0 }
 						}}>
-							{currentPhotos.map((photo) => (
-								<PhotoSection
-									key={photo.id}
-									title={photo.title}
-									photoSourceUrl={photo.photoSourceUrl}
-									description={photo.description}
-								/>
-							))}
+						{currentPhotos.map((photo) => (
+							<PhotoSection
+								key={photo.id}
+								title={photo.title}
+								photoSourceUrl={photo.photoSourceUrl}
+								description={photo.description}
+								time={photo.time}
+							/>
+						))}
 						</Box>
 
 						{isArrowNavigationVisible && page < totalPages - 1 ? (
 							<IconButton
 								onClick={() => setPage(prev => prev + 1)}
 								sx={{
-									bgcolor: 'rgba(255, 255, 255, 0.9)',
-									color: '#d6156f',
+									bgcolor: 'rgba(255, 255, 255, 0.95)',
+									color: '#a4133c',
 									order: { xs: 3, lg: 0 },
-									boxShadow: '0 4px 12px rgba(255, 105, 180, 0.3)',
+									boxShadow: '0 4px 12px rgba(164, 19, 60, 0.3), 0 2px 8px rgba(201, 24, 74, 0.2)',
 									'&:hover': {
 										bgcolor: '#fff',
 										transform: 'scale(1.1)',
-										boxShadow: '0 6px 20px rgba(255, 105, 180, 0.4)'
+										boxShadow: '0 6px 20px rgba(164, 19, 60, 0.5), 0 3px 12px rgba(201, 24, 74, 0.3)'
 									}
 								}}
 							>
@@ -119,7 +120,7 @@ export default function Gallery({ selectedYear, selectedMonth }: GalleryProps): 
 						)}
 					</Box>
 
-					<Typography align="center" sx={{ py: 2, color: '#fff', fontWeight: 600, fontSize: '1rem', textShadow: '2px 2px 4px rgba(214, 21, 111, 0.5)' }}>
+					<Typography align="center" sx={{ py: 2, color: '#fff', fontWeight: 600, fontSize: '1rem', textShadow: '2px 2px 4px rgba(128, 15, 47, 0.7), 1px 1px 8px rgba(164, 19, 60, 0.5)' }}>
             Page {page + 1} of {totalPages}
 					</Typography>
 				</>

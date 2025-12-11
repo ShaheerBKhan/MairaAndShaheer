@@ -4,11 +4,12 @@ type PhotoProps = {
   src: string
   alt: string
   title: string
+  date?: string
   onClick?: () => void
 }
 
 export default function Photo(props: PhotoProps): JSX.Element {
-	const { src, alt, title, onClick } = props
+	const { src, alt, title, date, onClick } = props
   
 	return (
 		<Box 
@@ -21,7 +22,7 @@ export default function Photo(props: PhotoProps): JSX.Element {
 				transition: 'transform 0.3s ease, box-shadow 0.3s ease',
 				'&:hover': onClick ? {
 					transform: 'scale(1.03)',
-					boxShadow: '0 12px 24px rgba(0,0,0,0.2)'
+					boxShadow: '0 20px 40px rgba(0,0,0,0.45), 0 10px 20px rgba(128, 15, 47, 0.4), 0 0 60px rgba(164, 19, 60, 0.3)'
 				} : {}
 			}}
 		>
@@ -29,7 +30,7 @@ export default function Photo(props: PhotoProps): JSX.Element {
 				sx={{
 					padding: '12px 12px 40px 12px',
 					background: '#ffffff',
-					boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+					boxShadow: '0 12px 36px rgba(0,0,0,0.4), 0 6px 18px rgba(128, 15, 47, 0.35), 0 0 40px rgba(164, 19, 60, 0.2)',
 					position: 'relative'
 				}}
 			>
@@ -63,6 +64,27 @@ export default function Photo(props: PhotoProps): JSX.Element {
 				>
 					{title}
 				</Typography>
+				{date && (
+					<Typography
+						variant="caption"
+						sx={{
+							position: 'absolute',
+							bottom: '-8px',
+							left: '12px',
+							right: '12px',
+							textAlign: 'center',
+							color: '#666',
+							fontFamily: "'Georgia', serif",
+							fontSize: '0.75rem'
+						}}
+					>
+						{new Date(date).toLocaleDateString('en-US', { 
+							month: 'long', 
+							day: 'numeric', 
+							year: 'numeric' 
+						})}
+					</Typography>
+				)}
 			</Box>
 		</Box>
 	)
